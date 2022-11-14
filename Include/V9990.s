@@ -480,3 +480,78 @@ V9:
     ld      ixl, 0    ; reset col counter
 
     ret
+
+; -----------------------------------------------------------
+
+.DisableScreen:
+    call    .Disable_Layer_A
+    call    .Disable_Layer_B
+    ret
+
+.EnableScreen:
+    call    .Enable_Layer_A
+    call    .Enable_Layer_B
+    ret
+
+; Disable layer "A" and sprites
+.Disable_Layer_A:
+    ;           +---- SDA: Set to "1" to disable layer "A" and sprites.
+    ;           |+--- SDB: Set to "1" to disable layer "B" and sprites.
+    ;           ||
+    ;ld      b, ab00 0000 b  ; value
+    ld      a, 22           ; register number
+    call    V9.ReadRegister
+
+    or      1000 0000 b     ; disable layer A
+    ld      b, a
+
+    ld      a, 22           ; register number
+    ;ld      b, 0000 0000 b  ; value
+    call    V9.SetRegister
+
+    ret
+
+
+
+; Disable layer "B" and sprites
+.Disable_Layer_B:
+    ld      a, 22           ; register number
+    call    V9.ReadRegister
+
+    or      0100 0000 b     ; disable layer B
+    ld      b, a
+
+    ld      a, 22           ; register number
+    call    V9.SetRegister
+
+    ret
+
+
+
+; Enable layer "A" and sprites
+.Enable_Layer_A:
+    ld      a, 22           ; register number
+    call    V9.ReadRegister
+
+    and     0111 1111 b     ; enable layer A
+    ld      b, a
+
+    ld      a, 22           ; register number
+    call    V9.SetRegister
+
+    ret
+
+
+
+; Enable layer "B" and sprites
+.Enable_Layer_B:
+    ld      a, 22           ; register number
+    call    V9.ReadRegister
+
+    and     1011 1111 b     ; enable layer B
+    ld      b, a
+
+    ld      a, 22           ; register number
+    call    V9.SetRegister
+
+    ret

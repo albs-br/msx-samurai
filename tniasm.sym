@@ -11,6 +11,7 @@ BIOS_PTRFIL: equ 0F864h ; last def. pass 3
 BIOS_H_ONGO: equ 0FDEAh ; last def. pass 3
 BIOS_H_FIEL: equ 0FE2Bh ; last def. pass 3
 BIOS_FILNM2: equ 0F871h ; last def. pass 3
+V9.EnableScreen: equ 04441h ; last def. pass 3
 BIOS_RAWPRT: equ 0F418h ; last def. pass 3
 BIOS_H_CRDO: equ 0FEE9h ; last def. pass 3
 BIOS_T32PAT: equ 0F3C5h ; last def. pass 3
@@ -113,7 +114,7 @@ BIOS_DRWFLG: equ 0FCBBh ; last def. pass 3
 BIOS_DOT: equ 0F6B5h ; last def. pass 3
 V9.ClearVRAM: equ 042F0h ; last def. pass 3
 BIOS_VOICCQ: equ 0FA75h ; last def. pass 3
-Execute: equ 0443Ah ; last def. pass 3
+Execute: equ 04480h ; last def. pass 3
 BIOS_ESTBLS: equ 0FB1Dh ; last def. pass 3
 BIOS_CYOFF: equ 0F947h ; last def. pass 3
 BIOS_CXOFF: equ 0F945h ; last def. pass 3
@@ -248,6 +249,7 @@ BIOS_RUNBNF: equ 0FCBEh ; last def. pass 3
 BIOS_LDIRVM: equ 05Ch ; last def. pass 3
 BIOS_TXTPAT: equ 0F3BBh ; last def. pass 3
 BIOS_CALATR: equ 087h ; last def. pass 3
+V9.DisableScreen: equ 0443Ah ; last def. pass 3
 V9.P1_NAMTBL_LAYER_B: equ 07E000h ; last def. pass 3
 BIOS_BIGFIL: equ 016Bh ; last def. pass 3
 BIOS_CAPST: equ 0FCABh ; last def. pass 3
@@ -313,7 +315,7 @@ BIOS_CLRSPR: equ 069h ; last def. pass 3
 BIOS_LFPROG: equ 0F954h ; last def. pass 3
 BIOS_H_LOPD: equ 0FED5h ; last def. pass 3
 BIOS_DPPAGE: equ 0FAF5h ; last def. pass 3
-NAM_TBL_seq: equ 044A2h ; last def. pass 3
+NAM_TBL_seq: equ 044DCh ; last def. pass 3
 BIOS_DIMFLG: equ 0F662h ; last def. pass 3
 BIOS_H_SNGF: equ 0FF39h ; last def. pass 3
 BIOS_H_FRQI: equ 0FF93h ; last def. pass 3
@@ -405,11 +407,13 @@ BIOS_RG5SAV: equ 0F3E4h ; last def. pass 3
 BIOS_FORCLR: equ 0F3E9h ; last def. pass 3
 BIOS_H_CRUN: equ 0FF20h ; last def. pass 3
 BIOS_NULBUF: equ 0F862h ; last def. pass 3
+V9.Enable_Layer_B: equ 04472h ; last def. pass 3
 BIOS_SLTWRK: equ 0FD09h ; last def. pass 3
 BIOS_OLDKEY: equ 0FBDAh ; last def. pass 3
 BIOS_STKTOP: equ 0F674h ; last def. pass 3
 HOOK_SIZE: equ 05h ; last def. pass 3
 BIOS_FNKSW1: equ 0FBCDh ; last def. pass 3
+V9.Disable_Layer_B: equ 04456h ; last def. pass 3
 BIOS_H_MKS: equ 0FE35h ; last def. pass 3
 BIOS_CNPNTS: equ 0F936h ; last def. pass 3
 BIOS_ERAFNK: equ 0CCh ; last def. pass 3
@@ -559,6 +563,7 @@ BIOS_CODSAV: equ 0FBCCh ; last def. pass 3
 Haohmaru_bg_palette: equ 0B700h ; last def. pass 3
 BIOS_FUNACT: equ 0F7BAh ; last def. pass 3
 BIOS_H_PLAY: equ 0FFC5h ; last def. pass 3
+V9.Disable_Layer_A: equ 04448h ; last def. pass 3
 BIOS_CHGSND: equ 0135h ; last def. pass 3
 BIOS_INIFNK: equ 03Eh ; last def. pass 3
 BIOS_MCLFLG: equ 0F958h ; last def. pass 3
@@ -599,6 +604,7 @@ BIOS_GTTRIG: equ 0D8h ; last def. pass 3
 BIOS_H_GEND: equ 0FEC6h ; last def. pass 3
 BIOS_STATFL: equ 0F3E7h ; last def. pass 3
 BIOS_CGTABL: equ 04h ; last def. pass 3
+V9.Enable_Layer_A: equ 04464h ; last def. pass 3
 BIOS_CALSLT: equ 01Ch ; last def. pass 3
 Wait: equ 0409Ch ; last def. pass 3
 BIOS_H_NTFL: equ 0FE62h ; last def. pass 3

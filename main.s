@@ -54,6 +54,10 @@ Execute:
     ld      hl, Haohmaru_bg_palette
     call    V9.LoadPalette
 
+    ld      a, 1
+    ld      hl, Earthquake_1_palette
+    call    V9.LoadPalette
+
 
 
     ; ------- set names table layer B
@@ -94,18 +98,31 @@ Execute:
     ld      b, 0000 0000 b  ; value
     call    V9.SetRegister
 
-    ; load sprite patterns
-
-    ; ; load SPRATR table
-    ; ld		hl, SPRATR_Table_Test				    ; RAM address (source)
-    ; ld		a, V9.P1_SPRATR >> 16	                ; VRAM address bits 18-16 (destiny)
-    ; ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
-    ; ld		bc, SPRATR_Table_Test.size		        ; Block length
-    ; call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
 
+    ; ------- load sprite patterns
 
-    call    V9.EnableScreen
+	; enable MegaROM page 3
+    ld	    a, 3
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Earthquake_1			            ; RAM address (source)
+    ld		a, V9.P1_PATTBL_LAYER_A >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, V9.P1_PATTBL_LAYER_A AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Earthquake_1.size	                ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+    ; load SPRATR table
+    ld		hl, SPRATR_Table_Test				    ; RAM address (source)
+    ld		a, V9.P1_SPRATR >> 16	                ; VRAM address bits 18-16 (destiny)
+    ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
+    ld		bc, SPRATR_Table_Test.size		        ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+
+
+    ;call    V9.EnableScreen
+    call    V9.Enable_Layer_B
 
 
     ; --------
@@ -166,6 +183,34 @@ NAM_TBL_seq:
     dw 832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 .size:  equ $ - NAM_TBL_seq
 
+SPRATR_Table_Test:
+    ;     +--- Sprite Y-coordinate (Actual display position is one line below specified)
+    ;     |        +--- Sprite Pattern Number (Pattern Offset is specified in R#25 SGBA)
+    ;     |        |       +--- X (bit 7-0)
+    ;     |        |       |        +-------------- Palette offset for sprite colors.
+    ;     |        |       |        |  +----------- Sprite is in front of the front layer when P=0, sprite is behind the front layer when P=1.
+    ;     |        |       |        |  | +--------- Sprite is disabled when D=1
+    ;     |        |       |        |  | |     +--- X (bit 9-8)
+    ;     |        |       |        |  | |     |
+    ;     Y,     PAT,      X,       nn p d - - X
+    db   56,       0,    128,       01 0 0 0 0 00 b
+    db   56,       1,    128+16,    01 0 0 0 0 00 b
+    db   56,       2,    128+32,    01 0 0 0 0 00 b
+    db   56,       3,    128+48,    01 0 0 0 0 00 b
+    db   56,       4,    128+64,    01 0 0 0 0 00 b
+    db   56,       5,    128+80,    01 0 0 0 0 00 b
+    db   56,       6,    128+96,    01 0 0 0 0 00 b
+    db   56,       7,    128+112,   01 0 0 0 0 00 b
+
+    db   56+16,   16,    128,       01 0 0 0 0 00 b
+    db   56+16,   17,    128+16,    01 0 0 0 0 00 b
+    db   56+16,   18,    128+32,    01 0 0 0 0 00 b
+    db   56+16,   19,    128+48,    01 0 0 0 0 00 b
+    db   56+16,   20,    128+64,    01 0 0 0 0 00 b
+    db   56+16,   21,    128+80,    01 0 0 0 0 00 b
+    db   56+16,   22,    128+96,    01 0 0 0 0 00 b
+    db   56+16,   23,    128+112,   01 0 0 0 0 00 b
+.size:  equ $ - SPRATR_Table_Test
 
 
     db      "End ROM started at 0x4000"
@@ -185,6 +230,11 @@ NAM_TBL_seq:
 ; ------- Page 2
 	org	0x8000, 0xBFFF
     INCLUDE "Graphics/Background/Haohmaru_1.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 3
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Earthquake_1.s"
 	ds PageSize - ($ - 0x8000), 255
 
 

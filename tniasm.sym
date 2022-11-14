@@ -27,6 +27,7 @@ BIOS_MLTNAM: equ 0F3D1h ; last def. pass 3
 BIOS_PINLIN: equ 0AEh ; last def. pass 3
 Screen11: equ 040FEh ; last def. pass 3
 ClearVram_MSX2.loop: equ 040F1h ; last def. pass 3
+SPRATR_Table_Test: equ 05285h ; last def. pass 3
 BIOS_TAPOOF: equ 0F0h ; last def. pass 3
 BIOS_ROMSLT: equ 0FCC0h ; last def. pass 3
 BIOS_VOICEN: equ 0FB38h ; last def. pass 3
@@ -83,6 +84,7 @@ BIOS_RSTMP: equ 0FB03h ; last def. pass 3
 Execute_VDP_YMMM: equ 04233h ; last def. pass 3
 BIOS_DISINT: equ 0FFCFh ; last def. pass 3
 BIOS_ATRBYT: equ 0F3F2h ; last def. pass 3
+Earthquake_1.size: equ 01800h ; last def. pass 3
 BIOS_H_ERRF: equ 0FF02h ; last def. pass 3
 BIOS_INTFLG: equ 0FC9Bh ; last def. pass 3
 BIOS_H_CVD: equ 0FE49h ; last def. pass 3
@@ -216,6 +218,7 @@ Execute_VDP_HMMM.vdpReady: equ 041C2h ; last def. pass 3
 V9.Fill_NAM_TBL_Sequentially: equ 043EDh ; last def. pass 3
 BIOS_WRPRIM: equ 0F385h ; last def. pass 3
 BIOS_FNKFLG: equ 0FBCEh ; last def. pass 3
+SPRATR_Table_Test.size: equ 040h ; last def. pass 3
 V9.P1_PATTBL_LAYER_B: equ 040000h ; last def. pass 3
 V9.SetTilePattern: equ 042D4h ; last def. pass 3
 BIOS_H_SAVE: equ 0FE6Ch ; last def. pass 3
@@ -269,6 +272,7 @@ BIOS_ONGSBF: equ 0FBD8h ; last def. pass 3
 BIOS_H_LOF: equ 0FE9Eh ; last def. pass 3
 BIOS_GRPCGP: equ 0F3CBh ; last def. pass 3
 BIOS_VOICAQ: equ 0F975h ; last def. pass 3
+Earthquake_1_palette: equ 09800h ; last def. pass 3
 BIOS_BOTTOM: equ 0FC48h ; last def. pass 3
 LoadPalette: equ 04035h ; last def. pass 3
 BIOS_CHGCLR: equ 062h ; last def. pass 3
@@ -315,7 +319,7 @@ BIOS_CLRSPR: equ 069h ; last def. pass 3
 BIOS_LFPROG: equ 0F954h ; last def. pass 3
 BIOS_H_LOPD: equ 0FED5h ; last def. pass 3
 BIOS_DPPAGE: equ 0FAF5h ; last def. pass 3
-NAM_TBL_seq: equ 044DCh ; last def. pass 3
+NAM_TBL_seq: equ 04505h ; last def. pass 3
 BIOS_DIMFLG: equ 0F662h ; last def. pass 3
 BIOS_H_SNGF: equ 0FF39h ; last def. pass 3
 BIOS_H_FRQI: equ 0FF93h ; last def. pass 3
@@ -415,6 +419,7 @@ HOOK_SIZE: equ 05h ; last def. pass 3
 BIOS_FNKSW1: equ 0FBCDh ; last def. pass 3
 V9.Disable_Layer_B: equ 04456h ; last def. pass 3
 BIOS_H_MKS: equ 0FE35h ; last def. pass 3
+Earthquake_1: equ 08000h ; last def. pass 3
 BIOS_CNPNTS: equ 0F936h ; last def. pass 3
 BIOS_ERAFNK: equ 0CCh ; last def. pass 3
 BIOS_MLTATR: equ 0F3D7h ; last def. pass 3

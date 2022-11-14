@@ -1,0 +1,14 @@
+class e{aeConfig;beaconBucketRegex="";beaconBucketAeApp="";aeStorage="//script.wikia.nocookie.net/fandom-ae-assets";constructor(e){return this.aeConfig=e,this}addScript(e){const t=document.createElement("script");t.src=e,t.type="text/javascript",t.async=!0,document.head.appendChild(t)}addStyles(e){const t=document.createElement("link");t.href=e,t.rel="stylesheet",document.head.appendChild(t)}getCookie(e){e=document.cookie.match("(^|;) ?"+e+"=([^;]*)(;|$)");return e?e[2]:null}getGeoValue(e,t,o){return o&&e.geo&&e.geo[o]||e[t]}addContextVariable(e,t,o){t.name&&(o=this.getGeoValue(t,"value",o))&&(e[t.name]=o)}addLib(e,t,o){var a=this.aeConfig[e];a&&((o=this.getGeoValue(a,"version",o))?this.addScript(this.aeStorage+`/${t}/${o}/${t}.min.js`):console.warn(`No version set up for lib ${e} with config: `+a))}load(){if(!this.aeConfig||"object"!=typeof this.aeConfig)throw new Error("Cannot create AdEngine script loader - configuration not provided or malformatted");let e=this.aeConfig.appName||"fandomdesktop",t="",o="";var a;if(this.aeConfig.withGeo&&(a=this.getCookie("Geo"),a=JSON.parse(decodeURIComponent(a)),t=a?a.country:""),this.aeConfig.withVersion&&(a=/(^v(\d+\.){2}\d+$|ADEN-.+|local|latest)/g,-1!==window.location.search.indexOf("adengine_version=")&&(o=(o=window.location.search.split("adengine_version=").pop().split("&").shift()).match(a)?"v"===o.charAt(0)||"latest"===o?o:"dev/"+o:"")),this.aeConfig.contextVariables){const n=window.ads=window.ads||{};var i=n.context=n.context||{};for(const s of this.aeConfig.contextVariables)this.addContextVariable(i,s,t)}if(this.addLib("trackingOptIn","tracking-opt-in",t),this.aeConfig.adEngine){o=o||(t&&this.aeConfig.adEngine.geo&&this.aeConfig.adEngine.geo[t]?this.aeConfig.adEngine.geo[t]:this.aeConfig.adEngine.version);const c=this.getCookie("wikia_beacon_id")||"";this.beaconBucketRegex&&this.beaconBucketAeApp&&c.match(new RegExp(this.beaconBucketRegex))&&(e=this.beaconBucketAeApp),"dev/local"===o?(this.addScript(`http://localhost:9000/${e}/main.bundle.js`),this.addStyles(`http://localhost:9000/${e}/styles.css`)):"dev/local_https"===o?(this.addScript(`https://localhost:9000/${e}/main.bundle.js`),this.addStyles(`https://localhost:9000/${e}/styles.css`)):(this.addScript(`${this.aeStorage}/platforms/${o}/${e}/main.bundle.js`),this.addStyles(`${this.aeStorage}/platforms/${o}/${e}/styles.css`))}}}new e({
+    appName: 'ucp-desktop',
+        adEngine: {
+        version: 'v124.5.0',
+        geo: {
+              PL: 'v124.5.0'
+        },
+    },
+    trackingOptIn: {
+        version: 'v9.4.6'
+    },
+    withVersion: true,
+    withGeo: true
+}).load(),"undefined"!=typeof module&&(module.exports=e);

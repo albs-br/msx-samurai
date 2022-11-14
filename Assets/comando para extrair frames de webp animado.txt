@@ -1,0 +1,10 @@
+frame = 0 <-- get last frame
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Earthquakess.webp -o frame_1.webp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 2 Earthquakess.webp -o frame_2.webp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 3 Earthquakess.webp -o frame_3.webp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 4 Earthquakess.webp -o frame_4.webp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Sshaohmarubg.webp -o Sshaohmarubg_frame_1.webp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Ssearthquakebg.webp -o Ssearthquakebg_frame_1.webp

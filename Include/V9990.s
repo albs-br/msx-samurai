@@ -428,3 +428,55 @@ V9:
     ; djnz    .Fill_NAM_TBL_Sequentially_loop
 
     ret
+
+; -----------------------------------------------------------
+
+; Inputs:
+; 	ADE: 19 bits addr in VRAM
+.Fill_NAM_TBL_Sequentially_32_cols:
+    call    .SetVdp_Write
+    push    de
+    pop     hl              ; VRAM addr
+
+    ld      bc, 32 * 64     ; loop counter (size of names table)
+    ld      de, 0           ; value to be written
+    ld      ixl, 0            ; col number counter
+.Fill_NAM_TBL_Sequentially_32_cols_loop:
+
+    ; write word value (little endian)
+    ld      a, e
+    out     (V9.PORT_0), a
+    ld      a, d
+    out     (V9.PORT_0), a
+
+    inc     de
+    
+    inc     ixl
+    cp      32          ; number of cols
+    call    z, .Fill_NAM_TBL_Sequentially_32_cols_next_line
+
+    dec     bc
+    ld      a, b
+    or      c
+    jp      nz, .Fill_NAM_TBL_Sequentially_32_cols_loop
+
+    ret
+
+.Fill_NAM_TBL_Sequentially_32_cols_next_line:
+    ; HL += 64 (32 cols)
+    push    bc
+        ld      bc, 256
+        add     hl, bc
+    pop     bc
+
+    ; both names tables of P1 mode have the same addr on bits 18-16
+    ld		a, V9.P1_NAMTBL_LAYER_A >> 16	        ; VRAM address bits 18-16 (destiny)
+    push    de
+        push    hl
+        pop     de
+        call    .SetVdp_Write
+    pop     de
+    
+    ld      ixl, 0    ; reset col counter
+
+    ret

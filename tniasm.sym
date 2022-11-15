@@ -218,7 +218,7 @@ Execute_VDP_HMMM.vdpReady: equ 041C2h ; last def. pass 3
 V9.Fill_NAM_TBL_Sequentially: equ 043EDh ; last def. pass 3
 BIOS_WRPRIM: equ 0F385h ; last def. pass 3
 BIOS_FNKFLG: equ 0FBCEh ; last def. pass 3
-SPRATR_Table_Test.size: equ 040h ; last def. pass 3
+SPRATR_Table_Test.size: equ 0A0h ; last def. pass 3
 V9.P1_PATTBL_LAYER_B: equ 040000h ; last def. pass 3
 V9.SetTilePattern: equ 042D4h ; last def. pass 3
 BIOS_H_SAVE: equ 0FE6Ch ; last def. pass 3

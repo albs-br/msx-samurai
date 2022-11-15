@@ -25,7 +25,7 @@
                 "args": [
                     {
                         //"value": "C:\\Users\\albs_\\source\\repos\\penguim-platformer\\go-penguin.rom",
-                        "value": "${fileBasenameNoExtension}.rom",
+                        "value": "msx-samurai.rom",
                         "quoting": "strong"
                     },
                     {

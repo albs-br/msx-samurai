@@ -50,12 +50,9 @@ Execute:
     ld      b, 0    ; palette number for layer B (0-3)
     call    V9.SetPaletteControlRegister
 
+    ; ------- set palette for layer B
     ld      a, 0
     ld      hl, Haohmaru_bg_palette
-    call    V9.LoadPalette
-
-    ld      a, 1
-    ld      hl, Earthquake_1_palette
     call    V9.LoadPalette
 
 
@@ -118,6 +115,13 @@ Execute:
     ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
     ld		bc, SPRATR_Table_Test.size		        ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+
+
+    ; ------- set palette for layer A/sprites
+    ld      a, 1
+    ld      hl, Earthquake_1_palette
+    call    V9.LoadPalette
 
 
 

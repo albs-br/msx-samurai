@@ -15,14 +15,8 @@ Seg_P8000_SW:	equ	0x7000	        ; Segment switch for page 0x8000-BFFFh (ASCII 1
 Execute:
     call    EnableRomPage2
 
-	; enable MegaROM page 1
-    ld	    a, 1
-	ld	    (Seg_P8000_SW), a
-
-
 
     call    V9.Mode_P1
-
 
 
     call    V9.DisableScreen
@@ -51,8 +45,14 @@ Execute:
     call    V9.SetPaletteControlRegister
 
     ; ------- set palette for layer B
+	; switch MegaROM page
+    ; ld	    a, HAOHMARU_BG_MEGAROM_PAGE
+    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE
+	ld	    (Seg_P8000_SW), a
+
     ld      a, 0
-    ld      hl, Haohmaru_bg_palette
+    ;ld      hl, Haohmaru_bg_palette
+    ld      hl, Earthquake_BG_palette
     call    V9.LoadPalette
 
 
@@ -68,20 +68,25 @@ Execute:
 
     ; ------- set tile patterns layer B
 
-    ld		hl, Haohmaru_bg_0			            ; RAM address (source)
+    ;ld		hl, Haohmaru_bg_0			            ; RAM address (source)
+    ld		hl, Earthquake_bg_0			            ; RAM address (source)
     ld		a, V9.P1_PATTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
     ld		de, V9.P1_PATTBL_LAYER_B AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ld		bc, Haohmaru_bg_0.size	                ; Block length
+    ;ld		bc, Haohmaru_bg_0.size	                ; Block length
+    ld		bc, Earthquake_bg_0.size	                ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
-	; enable MegaROM page 2
-    ld	    a, 2
+	; switch MegaROM page
+    ; ld	    a, HAOHMARU_BG_MEGAROM_PAGE + 1
+    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE + 1
 	ld	    (Seg_P8000_SW), a
 
-    ld		hl, Haohmaru_bg_1			            ; RAM address (source)
+    ;ld		hl, Haohmaru_bg_1			            ; RAM address (source)
+    ld		hl, Earthquake_bg_1			            ; RAM address (source)
     ld		a, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) >> 16	        ; VRAM address bits 18-16 (destiny)
     ld		de, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ld		bc, Haohmaru_bg_1.size	                ; Block length
+    ;ld		bc, Haohmaru_bg_1.size	                ; Block length
+    ld		bc, Earthquake_bg_1.size	                ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
 
@@ -315,6 +320,10 @@ SPRATR_Earthquake_1:
 ; ----------------------------------------------------
 ; MegaROM pages at 0x8000
 
+HAOHMARU_BG_MEGAROM_PAGE: equ 1
+EARTHQUAKE_BG_MEGAROM_PAGE: equ 5
+
+
 ; ------- Page 1
 	org	0x8000, 0xBFFF
     INCLUDE "Graphics/Background/Haohmaru_0.s"
@@ -336,6 +345,15 @@ SPRATR_Earthquake_1:
     INCLUDE "Graphics/Characters/Earthquake_1_cont.s"
 	ds PageSize - ($ - 0x8000), 255
 
+; ------- Page 5
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Background/Earthquake_0.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 6
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Background/Earthquake_1.s"
+	ds PageSize - ($ - 0x8000), 255
 
 
 ; ----------------------------------------------------

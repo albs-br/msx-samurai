@@ -10,3 +10,8 @@ C:\Users\user\Downloads\MSXgl-main\tools\MSXtk\bin\MSXimg.exe Ssearthquakebg_fra
 sprites:
 
 MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_1.asm -pos 0 0 -size 256 144 -name g_DataV9BG -trans 0x00FF00 -bpc 4 -pal custom --pal24
+
+MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_1.asm -pos 0 0   -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
+MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_2.asm -pos 0 128 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
+MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_3.asm -pos 0 256 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
+MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_4.asm -pos 0 384 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24

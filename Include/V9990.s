@@ -555,3 +555,20 @@ V9:
     call    V9.SetRegister
 
     ret
+
+
+
+; -----------------------------------------------------------
+
+; Input:
+;   A: value of bits 17-15 of Sprite Generator Base Addr (0-7)
+; Warning: only works on P1 mode
+.SetSpriteGeneratorBaseAddrRegister:
+
+    sla     a   ; shift left register
+    ld      b, a
+
+    ld      a, 25            ; register number
+    call    V9.SetRegister
+
+    ret

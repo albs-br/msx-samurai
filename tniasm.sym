@@ -14,7 +14,7 @@ BIOS_FILNM2: equ 0F871h ; last def. pass 3
 V9.EnableScreen: equ 04441h ; last def. pass 3
 BIOS_RAWPRT: equ 0F418h ; last def. pass 3
 BIOS_H_CRDO: equ 0FEE9h ; last def. pass 3
-SPRATR_Earthquake_1: equ 05298h ; last def. pass 3
+SPRATR_Earthquake_1: equ 052A1h ; last def. pass 3
 BIOS_T32PAT: equ 0F3C5h ; last def. pass 3
 ClearVram_MSX2: equ 040E3h ; last def. pass 3
 BIOS_INSFLG: equ 0FCA8h ; last def. pass 3
@@ -118,7 +118,7 @@ BIOS_DRWFLG: equ 0FCBBh ; last def. pass 3
 BIOS_DOT: equ 0F6B5h ; last def. pass 3
 V9.ClearVRAM: equ 042F0h ; last def. pass 3
 BIOS_VOICCQ: equ 0FA75h ; last def. pass 3
-Execute: equ 04480h ; last def. pass 3
+Execute: equ 04489h ; last def. pass 3
 BIOS_ESTBLS: equ 0FB1Dh ; last def. pass 3
 BIOS_CYOFF: equ 0F947h ; last def. pass 3
 BIOS_CXOFF: equ 0F945h ; last def. pass 3
@@ -156,6 +156,7 @@ BIOS_RTYCNT: equ 0FC9Ah ; last def. pass 3
 V9.SetPaletteControlRegister: equ 0436Ah ; last def. pass 3
 BIOS_MEMSIZ: equ 0F672h ; last def. pass 3
 BIOS_H_INDS: equ 0FE8Ah ; last def. pass 3
+V9.SetSpriteGeneratorBaseAddrRegister: equ 04480h ; last def. pass 3
 BIOS_H_FORM: equ 0FFACh ; last def. pass 3
 BIOS_EXPTBL: equ 0FCC1h ; last def. pass 3
 BIOS_CRTCNT: equ 0F3B1h ; last def. pass 3
@@ -274,7 +275,7 @@ BIOS_ONGSBF: equ 0FBD8h ; last def. pass 3
 BIOS_H_LOF: equ 0FE9Eh ; last def. pass 3
 BIOS_GRPCGP: equ 0F3CBh ; last def. pass 3
 BIOS_VOICAQ: equ 0F975h ; last def. pass 3
-Earthquake_1_palette: equ 053B8h ; last def. pass 3
+Earthquake_1_palette: equ 053C1h ; last def. pass 3
 BIOS_BOTTOM: equ 0FC48h ; last def. pass 3
 LoadPalette: equ 04035h ; last def. pass 3
 BIOS_CHGCLR: equ 062h ; last def. pass 3
@@ -321,7 +322,7 @@ BIOS_CLRSPR: equ 069h ; last def. pass 3
 BIOS_LFPROG: equ 0F954h ; last def. pass 3
 BIOS_H_LOPD: equ 0FED5h ; last def. pass 3
 BIOS_DPPAGE: equ 0FAF5h ; last def. pass 3
-NAM_TBL_seq: equ 04518h ; last def. pass 3
+NAM_TBL_seq: equ 04521h ; last def. pass 3
 BIOS_DIMFLG: equ 0F662h ; last def. pass 3
 BIOS_H_SNGF: equ 0FF39h ; last def. pass 3
 BIOS_H_FRQI: equ 0FF93h ; last def. pass 3

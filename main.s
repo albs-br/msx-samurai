@@ -109,11 +109,26 @@ Execute:
     ld		bc, Earthquake_1.size	                ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
+	; enable MegaROM page 4
+    ld	    a, 4
+	ld	    (Seg_P8000_SW), a
+
+; 128 bytes per line x 128 lines
+EARTHQUAKE_CONT_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + (128*128))
+
+    ld		hl, Earthquake_1_cont		            ; RAM address (source)
+    ld		a, EARTHQUAKE_CONT_VRAM_ADDR >> 16	    ; VRAM address bits 18-16 (destiny)
+    ld		de, EARTHQUAKE_CONT_VRAM_ADDR AND 0xffff; VRAM address bits 15-0 (destiny)
+    ld		bc, Earthquake_1_cont.size	            ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+
+
     ; load SPRATR table
-    ld		hl, SPRATR_Table_Test				    ; RAM address (source)
+    ld		hl, SPRATR_Earthquake_1				    ; RAM address (source)
     ld		a, V9.P1_SPRATR >> 16	                ; VRAM address bits 18-16 (destiny)
     ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
-    ld		bc, SPRATR_Table_Test.size		        ; Block length
+    ld		bc, SPRATR_Earthquake_1.size		    ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
 
@@ -187,7 +202,7 @@ NAM_TBL_seq:
     dw 832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 .size:  equ $ - NAM_TBL_seq
 
-SPRATR_Table_Test:
+SPRATR_Earthquake_1:
     ;     +--- Sprite Y-coordinate (Actual display position is one line below specified)
     ;     |        +--- Sprite Pattern Number (Pattern Offset is specified in R#25 SGBA)
     ;     |        |       +--- X (bit 7-0)
@@ -197,6 +212,7 @@ SPRATR_Table_Test:
     ;     |        |       |        |  | |     +--- X (bit 9-8)
     ;     |        |       |        |  | |     |
     ;     Y,     PAT,      X,       nn p d - - X
+; line 0
     db   56,       0,    128,       01 0 0 0 0 00 b
     db   56,       1,    128+16,    01 0 0 0 0 00 b
     db   56,       2,    128+32,    01 0 0 0 0 00 b
@@ -206,6 +222,7 @@ SPRATR_Table_Test:
     db   56,       6,    128+96,    01 0 0 0 0 00 b
     db   56,       7,    128+112,   01 0 0 0 0 00 b
 
+; line 1
     db   56+16,   16,    128,       01 0 0 0 0 00 b
     db   56+16,   17,    128+16,    01 0 0 0 0 00 b
     db   56+16,   18,    128+32,    01 0 0 0 0 00 b
@@ -215,6 +232,7 @@ SPRATR_Table_Test:
     db   56+16,   22,    128+96,    01 0 0 0 0 00 b
     db   56+16,   23,    128+112,   01 0 0 0 0 00 b
 
+; line 2
     db   56+32,   32,    128,       01 0 0 0 0 00 b
     db   56+32,   33,    128+16,    01 0 0 0 0 00 b
     db   56+32,   34,    128+32,    01 0 0 0 0 00 b
@@ -224,6 +242,7 @@ SPRATR_Table_Test:
     db   56+32,   38,    128+96,    01 0 0 0 0 00 b
     db   56+32,   39,    128+112,   01 0 0 0 0 00 b
 
+; line 3
     db   56+48,   48,    128,       01 0 0 0 0 00 b
     db   56+48,   49,    128+16,    01 0 0 0 0 00 b
     db   56+48,   50,    128+32,    01 0 0 0 0 00 b
@@ -233,17 +252,60 @@ SPRATR_Table_Test:
     db   56+48,   54,    128+96,    01 0 0 0 0 00 b
     db   56+48,   55,    128+112,   01 0 0 0 0 00 b
 
-    db   56+64,   56,    128,       01 0 0 0 0 00 b
-    db   56+64,   57,    128+16,    01 0 0 0 0 00 b
-    db   56+64,   58,    128+32,    01 0 0 0 0 00 b
-    db   56+64,   59,    128+48,    01 0 0 0 0 00 b
-    db   56+64,   60,    128+64,    01 0 0 0 0 00 b
-    db   56+64,   71,    128+80,    01 0 0 0 0 00 b
-    db   56+64,   72,    128+96,    01 0 0 0 0 00 b
-    db   56+64,   73,    128+112,   01 0 0 0 0 00 b
+; line 4
+    db   56+64,   64,    128,       01 0 0 0 0 00 b
+    db   56+64,   65,    128+16,    01 0 0 0 0 00 b
+    db   56+64,   66,    128+32,    01 0 0 0 0 00 b
+    db   56+64,   67,    128+48,    01 0 0 0 0 00 b
+    db   56+64,   68,    128+64,    01 0 0 0 0 00 b
+    db   56+64,   69,    128+80,    01 0 0 0 0 00 b
+    db   56+64,   70,    128+96,    01 0 0 0 0 00 b
+    db   56+64,   71,    128+112,   01 0 0 0 0 00 b
 
-.size:  equ $ - SPRATR_Table_Test
+; line 5
+    db   56+80,   80,    128,       01 0 0 0 0 00 b
+    db   56+80,   81,    128+16,    01 0 0 0 0 00 b
+    db   56+80,   82,    128+32,    01 0 0 0 0 00 b
+    db   56+80,   83,    128+48,    01 0 0 0 0 00 b
+    db   56+80,   84,    128+64,    01 0 0 0 0 00 b
+    db   56+80,   85,    128+80,    01 0 0 0 0 00 b
+    db   56+80,   86,    128+96,    01 0 0 0 0 00 b
+    db   56+80,   87,    128+112,   01 0 0 0 0 00 b
 
+; line 6
+    db   56+96,   96,    128,       01 0 0 0 0 00 b
+    db   56+96,   97,    128+16,    01 0 0 0 0 00 b
+    db   56+96,   98,    128+32,    01 0 0 0 0 00 b
+    db   56+96,   99,    128+48,    01 0 0 0 0 00 b
+    db   56+96,  100,    128+64,    01 0 0 0 0 00 b
+    db   56+96,  101,    128+80,    01 0 0 0 0 00 b
+    db   56+96,  102,    128+96,    01 0 0 0 0 00 b
+    db   56+96,  103,    128+112,   01 0 0 0 0 00 b
+
+; line 7
+    db  56+112,  112,    128,       01 0 0 0 0 00 b
+    db  56+112,  113,    128+16,    01 0 0 0 0 00 b
+    db  56+112,  114,    128+32,    01 0 0 0 0 00 b
+    db  56+112,  115,    128+48,    01 0 0 0 0 00 b
+    db  56+112,  116,    128+64,    01 0 0 0 0 00 b
+    db  56+112,  117,    128+80,    01 0 0 0 0 00 b
+    db  56+112,  118,    128+96,    01 0 0 0 0 00 b
+    db  56+112,  119,    128+112,   01 0 0 0 0 00 b
+
+; line 8
+    db  56+128,  128,    128,       01 0 0 0 0 00 b
+    db  56+128,  129,    128+16,    01 0 0 0 0 00 b
+    db  56+128,  130,    128+32,    01 0 0 0 0 00 b
+    db  56+128,  131,    128+48,    01 0 0 0 0 00 b
+    db  56+128,  132,    128+64,    01 0 0 0 0 00 b
+    db  56+128,  133,    128+80,    01 0 0 0 0 00 b
+    db  56+128,  134,    128+96,    01 0 0 0 0 00 b
+    db  56+128,  135,    128+112,   01 0 0 0 0 00 b
+
+.size:  equ $ - SPRATR_Earthquake_1
+
+; ------------------------- Palettes
+    INCLUDE "Graphics/Characters/Earthquake_palette.s"
 
     db      "End ROM started at 0x4000"
 
@@ -267,6 +329,11 @@ SPRATR_Table_Test:
 ; ------- Page 3
 	org	0x8000, 0xBFFF
     INCLUDE "Graphics/Characters/Earthquake_1.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 4
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Earthquake_1_cont.s"
 	ds PageSize - ($ - 0x8000), 255
 
 

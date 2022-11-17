@@ -565,6 +565,11 @@ V9:
 ; Warning: only works on P1 mode
 .SetSpriteGeneratorBaseAddrRegister:
 
+    ; set R#25 SPRITE GENERATOR BASE ADDRESS (READ/WRITE)
+    ; Sprite pattern: Selected from among 256 patterns
+    ; The pattern data is shared with the pattern layer (the base address should be set in register R#25.)
+    ; SGBA17-15: bits 3-1
+
     sla     a   ; shift left register
     ld      b, a
 

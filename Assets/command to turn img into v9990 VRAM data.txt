@@ -15,3 +15,6 @@ MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_1.asm -pos 0 0   -size 25
 MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_2.asm -pos 0 128 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
 MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_3.asm -pos 0 256 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
 MSXimg.exe Earthquakess_all_frames.bmp -out Earthquake_4.asm -pos 0 384 -size 256 128 -trans 0x00FF00 -bpc 4 -pal custom --pal24
+
+
+MSXimg.exe Haohmaru_frame_1.bmp -out Haohmaru_1.asm -pos 0 0   -size 256 112 -trans 0x00FF00 -bpc 4 -pal custom --pal24

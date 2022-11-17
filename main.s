@@ -124,20 +124,23 @@ EARTHQUAKE_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*256)*3))
     ld		bc, Earthquake_4.size	                ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
+; --------------
+
+; 128 bytes per line x 128 lines
+HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
+
 	; switch MegaROM page
-;     ld	    a, EARTHQUAKE_SPR_MEGAROM_PAGE + 1
-; 	ld	    (Seg_P8000_SW), a
+    ld	    a, HAOHMARU_SPR_MEGAROM_PAGE
+	ld	    (Seg_P8000_SW), a
 
-; ; 128 bytes per line x 128 lines
-; EARTHQUAKE_CONT_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + (128*128))
-
-;     ld		hl, Earthquake_1_cont		            ; RAM address (source)
-;     ld		a, EARTHQUAKE_CONT_VRAM_ADDR >> 16	    ; VRAM address bits 18-16 (destiny)
-;     ld		de, EARTHQUAKE_CONT_VRAM_ADDR AND 0xffff; VRAM address bits 15-0 (destiny)
-;     ld		bc, Earthquake_1_cont.size	            ; Block length
-;     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+    ld		hl, Haohmaru_1			                ; RAM address (source)
+    ld		a, HAOHMARU_1_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_1_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Haohmaru_1.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
 
+; ---------------------------
 
     ; load SPRATR table
     ld		hl, SPRATR_Earthquake_1				    ; RAM address (source)
@@ -146,11 +149,22 @@ EARTHQUAKE_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*256)*3))
     ld		bc, SPRATR_Earthquake_1.size		    ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
+HAOHMARU_SPRATR_ADDR:   equ V9.P1_SPRATR + SPRATR_Earthquake_1.size
+    ld		hl, SPRATR_Haohmaru_1				    ; RAM address (source)
+    ld		a, HAOHMARU_SPRATR_ADDR >> 16           ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_SPRATR_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, SPRATR_Haohmaru_1.size		        ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
 
-    ; ------- set palette for sprites
+
+    ; ------- set palettes for sprites
     ld      a, 1
     ld      hl, Earthquake_1_palette
+    call    V9.LoadPalette
+
+    ld      a, 2
+    ld      hl, Haohmaru_1_palette
     call    V9.LoadPalette
 
 
@@ -336,11 +350,15 @@ NAM_TBL_seq:
     dw 832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 .size:  equ $ - NAM_TBL_seq
 
+; ------------------------- SPRATR
+
     INCLUDE "Graphics/Characters/Earthquake_SPRATR.s"
+    INCLUDE "Graphics/Characters/Haohmaru_SPRATR.s"
 
 
 ; ------------------------- Palettes
     INCLUDE "Graphics/Characters/Earthquake_palette.s"
+    INCLUDE "Graphics/Characters/Haohmaru_palette.s"
 
     db      "End ROM started at 0x4000"
 
@@ -354,6 +372,7 @@ HAOHMARU_BG_MEGAROM_PAGE: equ 1
 EARTHQUAKE_BG_MEGAROM_PAGE: equ 3
 
 EARTHQUAKE_SPR_MEGAROM_PAGE: equ 5
+HAOHMARU_SPR_MEGAROM_PAGE: equ 9
 
 ; ------------------------
 ; Backgrounds
@@ -382,6 +401,8 @@ EARTHQUAKE_SPR_MEGAROM_PAGE: equ 5
 ; ------------------------
 ; Sprites
 
+; Earthquake
+
 ; ------- Page 5
 	org	0x8000, 0xBFFF
     INCLUDE "Graphics/Characters/Earthquake_1.s"
@@ -401,6 +422,14 @@ EARTHQUAKE_SPR_MEGAROM_PAGE: equ 5
 	org	0x8000, 0xBFFF
     INCLUDE "Graphics/Characters/Earthquake_4.s"
 	ds PageSize - ($ - 0x8000), 255
+
+; Haohmaru
+
+; ------- Page 9
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Haohmaru_1.s"
+	ds PageSize - ($ - 0x8000), 255
+
 
 ; ----------------------------------------------------
 ; RAM

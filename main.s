@@ -139,6 +139,19 @@ HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
     ld		bc, Haohmaru_1.size	                    ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
+; 128 bytes per line x 128 lines
+HAOHMARU_2_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*3))
+
+	; switch MegaROM page
+    ld	    a, HAOHMARU_SPR_MEGAROM_PAGE + 1
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Haohmaru_2			                ; RAM address (source)
+    ld		a, HAOHMARU_2_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_2_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Haohmaru_2.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
 
 ; ---------------------------
 
@@ -430,6 +443,10 @@ HAOHMARU_SPR_MEGAROM_PAGE: equ 9
     INCLUDE "Graphics/Characters/Haohmaru_1.s"
 	ds PageSize - ($ - 0x8000), 255
 
+; ------- Page 10
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Haohmaru_2.s"
+	ds PageSize - ($ - 0x8000), 255
 
 ; ----------------------------------------------------
 ; RAM

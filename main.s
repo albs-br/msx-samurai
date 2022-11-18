@@ -124,7 +124,154 @@ EARTHQUAKE_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*256)*3))
     ld		bc, Earthquake_4.size	                ; Block length
     call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
 
-; --------------
+
+
+    ; load SPRATR table
+    ld		hl, SPRATR_Earthquake_1				    ; RAM address (source)
+    ld		a, V9.P1_SPRATR >> 16	                ; VRAM address bits 18-16 (destiny)
+    ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
+    ld		bc, SPRATR_Earthquake_1.size		    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+
+
+    ; set palette for sprites
+    ld      a, 1
+    ld      hl, Earthquake_1_palette
+    call    V9.LoadPalette
+
+; ------------------------------------------
+
+    call    Load_Haohmaru_Sprites
+    ;call    Load_Nakoruru_Sprites
+
+; ------------------------------------------------------
+
+    ;call    V9.EnableScreen
+    call    V9.Enable_Layer_B
+
+
+    ; --------
+    ;jp      $   ; eternal loop
+MainLoop:
+    call    Wait_Vblank
+
+
+
+    ld      a, (BIOS_JIFFY)
+    and     0000 0111 b     ; animation at each 8 frames
+    or      a
+    jp      nz, .skipAnimation
+
+    ld      a, (BIOS_JIFFY)
+    and     0001 1000 b
+    srl     a   ; shift right register
+    srl     a
+    srl     a
+    call    V9.SetSpriteGeneratorBaseAddrRegister
+.skipAnimation:
+
+
+    ld      hl, (Counter)
+    inc     hl
+    ld      (Counter), hl
+
+
+    ld      de, 300
+    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
+    call    z, Load_Nakoruru_Sprites
+
+    ld      de, 600
+    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
+    call    z, Load_BG_Earthquake
+
+    ld      de, 900
+    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
+    call    z, Load_Haohmaru_Sprites
+
+    ld      de, 1200
+    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
+    call    z, .Load_BG_Haohmaru_ResetCounter
+
+
+    jp      MainLoop
+
+.Load_BG_Haohmaru_ResetCounter:
+    ld      hl, 0
+    ld      (Counter), hl
+
+    call    Load_BG_Haohmaru
+
+    ret
+; -------------------------------------------------------------
+
+Load_BG_Earthquake:
+    ; ------- set palette for layer B
+	; switch MegaROM page
+    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE
+	ld	    (Seg_P8000_SW), a
+
+    ld      a, 0
+    ld      hl, Earthquake_BG_palette
+    call    V9.LoadPalette
+
+
+
+    ; ------- set tile patterns layer B
+
+    ld		hl, Earthquake_bg_0			            ; RAM address (source)
+    ld		a, V9.P1_PATTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, V9.P1_PATTBL_LAYER_B AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Earthquake_bg_0.size	                ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+	; switch MegaROM page
+    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE + 1
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Earthquake_bg_1			            ; RAM address (source)
+    ld		a, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Earthquake_bg_1.size	                ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+    ret
+
+Load_BG_Haohmaru:
+    ; ------- set palette for layer B
+	; switch MegaROM page
+    ld	    a, HAOHMARU_BG_MEGAROM_PAGE
+	ld	    (Seg_P8000_SW), a
+
+    ld      a, 0
+    ld      hl, Haohmaru_bg_palette
+    call    V9.LoadPalette
+
+
+
+    ; ------- set tile patterns layer B
+
+    ld		hl, Haohmaru_bg_0			            ; RAM address (source)
+    ld		a, V9.P1_PATTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, V9.P1_PATTBL_LAYER_B AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Haohmaru_bg_0.size	                ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+	; switch MegaROM page
+    ld	    a, HAOHMARU_BG_MEGAROM_PAGE + 1
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Haohmaru_bg_1			            ; RAM address (source)
+    ld		a, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Haohmaru_bg_1.size	                ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+    ret
+
+; -------------------------------------------------------------
+
+Load_Haohmaru_Sprites:
 
 ; 128 bytes per line x 128 lines
 HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
@@ -181,12 +328,6 @@ HAOHMARU_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*7))
 ; ---------------------------
 
     ; load SPRATR table
-    ld		hl, SPRATR_Earthquake_1				    ; RAM address (source)
-    ld		a, V9.P1_SPRATR >> 16	                ; VRAM address bits 18-16 (destiny)
-    ld		de, V9.P1_SPRATR AND 0xffff             ; VRAM address bits 15-0 (destiny)
-    ld		bc, SPRATR_Earthquake_1.size		    ; Block length
-    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
-
 HAOHMARU_SPRATR_ADDR:   equ V9.P1_SPRATR + SPRATR_Earthquake_1.size
     ld		hl, SPRATR_Haohmaru_1				    ; RAM address (source)
     ld		a, HAOHMARU_SPRATR_ADDR >> 16           ; VRAM address bits 18-16 (destiny)
@@ -196,145 +337,90 @@ HAOHMARU_SPRATR_ADDR:   equ V9.P1_SPRATR + SPRATR_Earthquake_1.size
 
 
 
-    ; ------- set palettes for sprites
-    ld      a, 1
-    ld      hl, Earthquake_1_palette
-    call    V9.LoadPalette
-
+    ; set palette for sprites
     ld      a, 2
     ld      hl, Haohmaru_1_palette
     call    V9.LoadPalette
 
-
-
-    ;call    V9.EnableScreen
-    call    V9.Enable_Layer_B
-
-
-    ; --------
-    ;jp      $   ; eternal loop
-MainLoop:
-    call    Wait_Vblank
-
-
-
-    ld      a, (BIOS_JIFFY)
-    and     0000 0111 b     ; animation at each 8 frames
-    or      a
-    jp      nz, .skipAnimation
-
-    ld      a, (BIOS_JIFFY)
-    and     0001 1000 b
-    srl     a   ; shift right register
-    srl     a
-    srl     a
-    call    V9.SetSpriteGeneratorBaseAddrRegister
-.skipAnimation:
-
-
-    ld      hl, (Counter)
-    inc     hl
-    ld      (Counter), hl
-
-    ld      de, 300
-    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
-    call    z, Load_BG_Earthquake
-
-    ld      de, 600
-    call    BIOS_DCOMPR         ; Compare Contents Of HL & DE, Set Z-Flag IF (HL == DE), Set CY-Flag IF (HL < DE)
-    call    z, .Load_BG_Haohmaru_ResetCounter
-
-
-    jp      MainLoop
-
-.Load_BG_Haohmaru_ResetCounter:
-    ld      hl, 0
-    ld      (Counter), hl
-
-    call    Load_BG_Haohmaru
-
-    ret
-; -------------------------------------------------------------
-
-Load_BG_Earthquake:
-    ; ------- set palette for layer B
-	; switch MegaROM page
-    ; ld	    a, HAOHMARU_BG_MEGAROM_PAGE
-    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE
-	ld	    (Seg_P8000_SW), a
-
-    ld      a, 0
-    ;ld      hl, Haohmaru_bg_palette
-    ld      hl, Earthquake_BG_palette
-    call    V9.LoadPalette
-
-
-
-    ; ------- set tile patterns layer B
-
-    ;ld		hl, Haohmaru_bg_0			            ; RAM address (source)
-    ld		hl, Earthquake_bg_0			            ; RAM address (source)
-    ld		a, V9.P1_PATTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
-    ld		de, V9.P1_PATTBL_LAYER_B AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ;ld		bc, Haohmaru_bg_0.size	                ; Block length
-    ld		bc, Earthquake_bg_0.size	                ; Block length
-    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
-
-	; switch MegaROM page
-    ; ld	    a, HAOHMARU_BG_MEGAROM_PAGE + 1
-    ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE + 1
-	ld	    (Seg_P8000_SW), a
-
-    ;ld		hl, Haohmaru_bg_1			            ; RAM address (source)
-    ld		hl, Earthquake_bg_1			            ; RAM address (source)
-    ld		a, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) >> 16	        ; VRAM address bits 18-16 (destiny)
-    ld		de, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ;ld		bc, Haohmaru_bg_1.size	                ; Block length
-    ld		bc, Earthquake_bg_1.size	                ; Block length
-    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
-
-    ret
-
-Load_BG_Haohmaru:
-    ; ------- set palette for layer B
-	; switch MegaROM page
-    ld	    a, HAOHMARU_BG_MEGAROM_PAGE
-    ;ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE
-	ld	    (Seg_P8000_SW), a
-
-    ld      a, 0
-    ld      hl, Haohmaru_bg_palette
-    ;ld      hl, Earthquake_BG_palette
-    call    V9.LoadPalette
-
-
-
-    ; ------- set tile patterns layer B
-
-    ld		hl, Haohmaru_bg_0			            ; RAM address (source)
-    ;ld		hl, Earthquake_bg_0			            ; RAM address (source)
-    ld		a, V9.P1_PATTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
-    ld		de, V9.P1_PATTBL_LAYER_B AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ld		bc, Haohmaru_bg_0.size	                ; Block length
-    ;ld		bc, Earthquake_bg_0.size	                ; Block length
-    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
-
-	; switch MegaROM page
-    ld	    a, HAOHMARU_BG_MEGAROM_PAGE + 1
-    ;ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE + 1
-	ld	    (Seg_P8000_SW), a
-
-    ld		hl, Haohmaru_bg_1			            ; RAM address (source)
-    ;ld		hl, Earthquake_bg_1			            ; RAM address (source)
-    ld		a, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) >> 16	        ; VRAM address bits 18-16 (destiny)
-    ld		de, 0 + (V9.P1_PATTBL_LAYER_B + Haohmaru_bg_0.size) AND 0xffff     ; VRAM address bits 15-0 (destiny)
-    ld		bc, Haohmaru_bg_1.size	                ; Block length
-    ;ld		bc, Earthquake_bg_1.size	                ; Block length
-    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
-
     ret
 
 ; -------------------------------------------------------------
+
+Load_Nakoruru_Sprites:
+
+; 128 bytes per line x 128 lines
+;HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
+
+	; switch MegaROM page
+    ld	    a, NAKORURU_SPR_MEGAROM_PAGE
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Nakoruru_1			                ; RAM address (source)
+    ld		a, HAOHMARU_1_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_1_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Nakoruru_1.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+; 128 bytes per line x 128 lines
+;HAOHMARU_2_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*3))
+
+	; switch MegaROM page
+    ld	    a, NAKORURU_SPR_MEGAROM_PAGE + 1
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Nakoruru_2			                ; RAM address (source)
+    ld		a, HAOHMARU_2_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_2_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Nakoruru_2.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+; 128 bytes per line x 128 lines
+; HAOHMARU_3_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*5))
+
+	; switch MegaROM page
+    ld	    a, NAKORURU_SPR_MEGAROM_PAGE + 2
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Nakoruru_3			                ; RAM address (source)
+    ld		a, HAOHMARU_3_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_3_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Nakoruru_3.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+; 128 bytes per line x 128 lines
+; HAOHMARU_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*7))
+
+	; switch MegaROM page
+    ld	    a, NAKORURU_SPR_MEGAROM_PAGE + 3
+	ld	    (Seg_P8000_SW), a
+
+    ld		hl, Nakoruru_4			                ; RAM address (source)
+    ld		a, HAOHMARU_4_VRAM_ADDR >> 16	        ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_4_VRAM_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, Nakoruru_4.size	                    ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+; ---------------------------
+
+    ; SPRATR table is the same for Haohmaru and Nakoruru sprites
+
+    ; load SPRATR table
+;HAOHMARU_SPRATR_ADDR:   equ V9.P1_SPRATR + SPRATR_Earthquake_1.size
+    ld		hl, SPRATR_Haohmaru_1				    ; RAM address (source)
+    ld		a, HAOHMARU_SPRATR_ADDR >> 16           ; VRAM address bits 18-16 (destiny)
+    ld		de, HAOHMARU_SPRATR_ADDR AND 0xffff     ; VRAM address bits 15-0 (destiny)
+    ld		bc, SPRATR_Haohmaru_1.size		        ; Block length
+    call 	V9.LDIRVM        					    ; Block transfer to VRAM from memory
+
+
+
+    ; set palette for sprites
+    ld      a, 2
+    ld      hl, Nakoruru_1_palette
+    call    V9.LoadPalette
+
+    ret
+
 
 ; To write a value in VRAM, set the target address to VRAM Write Base Address registers (R#0-R#2) 
 ; and have the data output at VRAM DATA port (P#0). As the bit 7 (MSB) of R#2 functions as
@@ -390,13 +476,14 @@ NAM_TBL_seq:
 
 ; ------------------------- SPRATR
 
-    INCLUDE "Graphics/Characters/Earthquake_SPRATR.s"
-    INCLUDE "Graphics/Characters/Haohmaru_SPRATR.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_SPRATR.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_SPRATR.s"
 
 
 ; ------------------------- Palettes
-    INCLUDE "Graphics/Characters/Earthquake_palette.s"
-    INCLUDE "Graphics/Characters/Haohmaru_palette.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_palette.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_palette.s"
+    INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_palette.s"
 
     db      "End ROM started at 0x4000"
 
@@ -411,6 +498,7 @@ EARTHQUAKE_BG_MEGAROM_PAGE: equ 3
 
 EARTHQUAKE_SPR_MEGAROM_PAGE: equ 5
 HAOHMARU_SPR_MEGAROM_PAGE: equ 9
+NAKORURU_SPR_MEGAROM_PAGE: equ 13
 
 ; ------------------------
 ; Backgrounds
@@ -443,44 +531,66 @@ HAOHMARU_SPR_MEGAROM_PAGE: equ 9
 
 ; ------- Page 5
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Earthquake_1.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_1.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 6
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Earthquake_2.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_2.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 7
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Earthquake_3.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_3.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 8
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Earthquake_4.s"
+    INCLUDE "Graphics/Characters/Earthquake/Earthquake_4.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; Haohmaru
 
 ; ------- Page 9
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Haohmaru_1.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_1.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 10
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Haohmaru_2.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_2.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 11
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Haohmaru_3.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_3.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ------- Page 12
 	org	0x8000, 0xBFFF
-    INCLUDE "Graphics/Characters/Haohmaru_4.s"
+    INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_4.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; Nakoruru
+
+; ------- Page 13
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_1.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 14
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_2.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 15
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_3.s"
+	ds PageSize - ($ - 0x8000), 255
+
+; ------- Page 16
+	org	0x8000, 0xBFFF
+    INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_4.s"
 	ds PageSize - ($ - 0x8000), 255
 
 ; ----------------------------------------------------

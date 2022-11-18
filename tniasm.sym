@@ -9,15 +9,15 @@ Wait_Vblank: equ 04090h ; last def. pass 3
 BIOS_WRSLT: equ 014h ; last def. pass 3
 BIOS_PTRFIL: equ 0F864h ; last def. pass 3
 BIOS_H_ONGO: equ 0FDEAh ; last def. pass 3
-MainLoop.skipAnimation: equ 04593h ; last def. pass 3
+MainLoop.skipAnimation: equ 04534h ; last def. pass 3
 BIOS_H_FIEL: equ 0FE2Bh ; last def. pass 3
 BIOS_FILNM2: equ 0F871h ; last def. pass 3
 V9.EnableScreen: equ 04441h ; last def. pass 3
 BIOS_RAWPRT: equ 0F418h ; last def. pass 3
 BIOS_H_CRDO: equ 0FEE9h ; last def. pass 3
-SPRATR_Earthquake_1: equ 05397h ; last def. pass 3
+SPRATR_Earthquake_1: equ 05410h ; last def. pass 3
 BIOS_T32PAT: equ 0F3C5h ; last def. pass 3
-MainLoop.Load_BG_Haohmaru_ResetCounter: equ 045AFh ; last def. pass 3
+MainLoop.Load_BG_Haohmaru_ResetCounter: equ 04562h ; last def. pass 3
 ClearVram_MSX2: equ 040E3h ; last def. pass 3
 BIOS_INSFLG: equ 0FCA8h ; last def. pass 3
 HTIMI: equ 0FD9Fh ; last def. pass 3
@@ -30,13 +30,14 @@ BIOS_MLTNAM: equ 0F3D1h ; last def. pass 3
 BIOS_PINLIN: equ 0AEh ; last def. pass 3
 Screen11: equ 040FEh ; last def. pass 3
 ClearVram_MSX2.loop: equ 040F1h ; last def. pass 3
-Load_BG_Haohmaru: equ 045E8h ; last def. pass 3
+Load_BG_Haohmaru: equ 0459Bh ; last def. pass 3
 BIOS_TAPOOF: equ 0F0h ; last def. pass 3
 BIOS_ROMSLT: equ 0FCC0h ; last def. pass 3
 BIOS_VOICEN: equ 0FB38h ; last def. pass 3
 BIOS_ERRTXT: equ 0F6B7h ; last def. pass 3
 BIOS_CPNCNT8: equ 0F93Bh ; last def. pass 3
 BIOS_DECCNT: equ 0F7F4h ; last def. pass 3
+Load_Haohmaru_Sprites: equ 045CAh ; last def. pass 3
 V9.P1_NAMTBL_LAYER_A: equ 07C000h ; last def. pass 3
 BIOS_H_PHYD: equ 0FFA7h ; last def. pass 3
 BIOS_SAVVOL: equ 0FB39h ; last def. pass 3
@@ -62,7 +63,7 @@ BIOS_MINDEL: equ 0F92Dh ; last def. pass 3
 BIOS_STREND: equ 0F6C6h ; last def. pass 3
 BIOS_ENASLT: equ 024h ; last def. pass 3
 BIOS_H_BAKU: equ 0FEADh ; last def. pass 3
-Earthquake_bg_1.size: equ 03100h ; last def. pass 3
+Earthquake_bg_1.size: equ 03300h ; last def. pass 3
 BIOS_CSAVEA: equ 0F942h ; last def. pass 3
 BIOS_EXTROM: equ 015Fh ; last def. pass 3
 BIOS_BREAKX: equ 0B7h ; last def. pass 3
@@ -76,7 +77,7 @@ BIOS_TAPIN: equ 0E4h ; last def. pass 3
 BIOS_H_CHPH: equ 0FDA4h ; last def. pass 3
 BIOS_NSETRD: equ 016Eh ; last def. pass 3
 BIOS_JIFFY: equ 0FC9Eh ; last def. pass 3
-MainLoop: equ 04579h ; last def. pass 3
+MainLoop: equ 0451Ah ; last def. pass 3
 Wait_15_Vblanks: equ 0407Eh ; last def. pass 3
 REG2SAV: equ 0F3E1h ; last def. pass 3
 BIOS_H_GONE: equ 0FF43h ; last def. pass 3
@@ -101,7 +102,7 @@ BIOS_INIPLT: equ 0141h ; last def. pass 3
 BIOS_DEVNUM: equ 0FB17h ; last def. pass 3
 BIOS_SLTATR: equ 0FCC9h ; last def. pass 3
 BIOS_H_WIDT: equ 0FF84h ; last def. pass 3
-SPRATR_Haohmaru_1: equ 054B7h ; last def. pass 3
+SPRATR_Haohmaru_1: equ 05530h ; last def. pass 3
 BIOS_GRPNAM: equ 0F3C7h ; last def. pass 3
 BIOS_VDP_DW: equ 07h ; last def. pass 3
 BIOS_YSAVE: equ 0FB00h ; last def. pass 3
@@ -153,6 +154,7 @@ Execute_VDP_LMMM: equ 041B7h ; last def. pass 3
 BIOS_H_IPL: equ 0FE03h ; last def. pass 3
 Wait_15_Vblanks.waitVBlank: equ 04084h ; last def. pass 3
 BIOS_PUTPNT: equ 0F3F8h ; last def. pass 3
+Nakoruru_4.size: equ 03800h ; last def. pass 3
 BIOS_LPTPOS: equ 0F415h ; last def. pass 3
 BIOS_CHGMOD: equ 05Fh ; last def. pass 3
 SetPaletteColor_FromAddress: equ 04023h ; last def. pass 3
@@ -163,7 +165,7 @@ BIOS_RTYCNT: equ 0FC9Ah ; last def. pass 3
 V9.SetPaletteControlRegister: equ 0436Ah ; last def. pass 3
 BIOS_MEMSIZ: equ 0F672h ; last def. pass 3
 BIOS_H_INDS: equ 0FE8Ah ; last def. pass 3
-Load_BG_Earthquake: equ 045B9h ; last def. pass 3
+Load_BG_Earthquake: equ 0456Ch ; last def. pass 3
 V9.SetSpriteGeneratorBaseAddrRegister: equ 04480h ; last def. pass 3
 BIOS_H_FORM: equ 0FFACh ; last def. pass 3
 BIOS_EXPTBL: equ 0FCC1h ; last def. pass 3
@@ -243,6 +245,7 @@ BIOS_BRDATR: equ 0FCB2h ; last def. pass 3
 BIOS_H_SCNE: equ 0FF98h ; last def. pass 3
 BIOS_H_COMP: equ 0FF57h ; last def. pass 3
 BIOS_KBUF: equ 0F41Fh ; last def. pass 3
+NAKORURU_SPR_MEGAROM_PAGE: equ 0Dh ; last def. pass 3
 BIOS_REDCLK: equ 01F5h ; last def. pass 3
 BIOS_MUSICF: equ 0FC3Fh ; last def. pass 3
 BIOS_ENDPRG: equ 0F40Fh ; last def. pass 3
@@ -288,12 +291,13 @@ BIOS_ONGSBF: equ 0FBD8h ; last def. pass 3
 BIOS_H_LOF: equ 0FE9Eh ; last def. pass 3
 BIOS_GRPCGP: equ 0F3CBh ; last def. pass 3
 BIOS_VOICAQ: equ 0F975h ; last def. pass 3
-Earthquake_1_palette: equ 05543h ; last def. pass 3
+Earthquake_1_palette: equ 055BCh ; last def. pass 3
 BIOS_BOTTOM: equ 0FC48h ; last def. pass 3
 Haohmaru_1.size: equ 03800h ; last def. pass 3
 LoadPalette: equ 04035h ; last def. pass 3
 BIOS_CHGCLR: equ 062h ; last def. pass 3
 SetPaletteColor: equ 04010h ; last def. pass 3
+Nakoruru_2: equ 08000h ; last def. pass 3
 Wait_Vblank.waitVBlank: equ 04094h ; last def. pass 3
 V9.PORT_5: equ 065h ; last def. pass 3
 Earthquake_4.size: equ 04000h ; last def. pass 3
@@ -303,6 +307,7 @@ Haohmaru_3: equ 08000h ; last def. pass 3
 REG27SAV: equ 0FFFCh ; last def. pass 3
 BIOS_H_MKI: equ 0FE30h ; last def. pass 3
 BIOS_H_RSLF: equ 0FE8Fh ; last def. pass 3
+Nakoruru_3.size: equ 03800h ; last def. pass 3
 BIOS_FNKSB: equ 0C9h ; last def. pass 3
 BIOS_ARYTAB: equ 0F6C4h ; last def. pass 3
 Counter: equ 0C000h ; last def. pass 3
@@ -340,7 +345,8 @@ BIOS_CLRSPR: equ 069h ; last def. pass 3
 BIOS_LFPROG: equ 0F954h ; last def. pass 3
 BIOS_H_LOPD: equ 0FED5h ; last def. pass 3
 BIOS_DPPAGE: equ 0FAF5h ; last def. pass 3
-NAM_TBL_seq: equ 04617h ; last def. pass 3
+Nakoruru_4: equ 08000h ; last def. pass 3
+NAM_TBL_seq: equ 04690h ; last def. pass 3
 BIOS_DIMFLG: equ 0F662h ; last def. pass 3
 BIOS_H_SNGF: equ 0FF39h ; last def. pass 3
 BIOS_H_FRQI: equ 0FF93h ; last def. pass 3
@@ -370,6 +376,7 @@ BIOS_SUBROM: equ 015Ch ; last def. pass 3
 BIOS_PATBAS: equ 0F926h ; last def. pass 3
 BIOS_H_EOF: equ 0FEA3h ; last def. pass 3
 BIOS_LOW: equ 0F406h ; last def. pass 3
+Nakoruru_1.size: equ 03800h ; last def. pass 3
 Haohmaru_2: equ 08000h ; last def. pass 3
 Wait.loop: equ 0409Eh ; last def. pass 3
 MSXID2: equ 02Ch ; last def. pass 3
@@ -400,6 +407,7 @@ BIOS_DATCNT: equ 0FB18h ; last def. pass 3
 BIOS_ENDBUF: equ 0F660h ; last def. pass 3
 PPI.B: equ 0A9h ; last def. pass 3
 BIOS_INIMLT: equ 075h ; last def. pass 3
+Nakoruru_1: equ 08000h ; last def. pass 3
 BIOS_H_FING: equ 0FF7Ah ; last def. pass 3
 Haohmaru_4.size: equ 03800h ; last def. pass 3
 BIOS_VARTAB: equ 0F6C2h ; last def. pass 3
@@ -445,7 +453,7 @@ V9.Enable_Layer_B: equ 04472h ; last def. pass 3
 BIOS_SLTWRK: equ 0FD09h ; last def. pass 3
 BIOS_OLDKEY: equ 0FBDAh ; last def. pass 3
 BIOS_STKTOP: equ 0F674h ; last def. pass 3
-Haohmaru_1_palette: equ 05573h ; last def. pass 3
+Haohmaru_1_palette: equ 055ECh ; last def. pass 3
 HOOK_SIZE: equ 05h ; last def. pass 3
 BIOS_FNKSW1: equ 0FBCDh ; last def. pass 3
 V9.Disable_Layer_B: equ 04456h ; last def. pass 3
@@ -463,7 +471,7 @@ BIOS_GTPDL: equ 0DEh ; last def. pass 3
 BIOS_ONEFLG: equ 0F6BBh ; last def. pass 3
 BIOS_CHGCAP: equ 0132h ; last def. pass 3
 BIOS_DONUM: equ 0F665h ; last def. pass 3
-Earthquake_bg_0.size: equ 03900h ; last def. pass 3
+Earthquake_bg_0.size: equ 03700h ; last def. pass 3
 BIOS_CMASK: equ 0F92Ch ; last def. pass 3
 BIOS_RNDX: equ 0F857h ; last def. pass 3
 BIOS_SKPCNT: equ 0F94Fh ; last def. pass 3
@@ -474,11 +482,12 @@ BIOS_H_CHRG: equ 0FF48h ; last def. pass 3
 BIOS_RSLREG: equ 0138h ; last def. pass 3
 BIOS_ENDFOR: equ 0F6A1h ; last def. pass 3
 BIOS_VDPSTA: equ 0131h ; last def. pass 3
-Earthquake_BG_palette: equ 0B900h ; last def. pass 3
+Earthquake_BG_palette: equ 0B700h ; last def. pass 3
 BIOS_DATPTR: equ 0F6C8h ; last def. pass 3
 BIOS_H_DSKI: equ 0FE17h ; last def. pass 3
 BIOS_LPTOUT: equ 0A5h ; last def. pass 3
 BIOS_ERRLIN: equ 0F6B3h ; last def. pass 3
+Nakoruru_3: equ 08000h ; last def. pass 3
 REG8SAV: equ 0FFE7h ; last def. pass 3
 BIOS_RG0SAV: equ 0F3DFh ; last def. pass 3
 BIOS_LINL40: equ 0F3AEh ; last def. pass 3
@@ -550,6 +559,7 @@ BIOS_MODE: equ 0FAFCh ; last def. pass 3
 Execute_VDP_YMMM.vdpReady: equ 0423Eh ; last def. pass 3
 BIOS_H_MERG: equ 0FE67h ; last def. pass 3
 WRTVDP_without_DI_EI: equ 04290h ; last def. pass 3
+Load_Nakoruru_Sprites: equ 0462Dh ; last def. pass 3
 BIOS_AUTLIN: equ 0F6ABh ; last def. pass 3
 BIOS_H_GETP: equ 0FE4Eh ; last def. pass 3
 BIOS_H_MAIN: equ 0FF0Ch ; last def. pass 3
@@ -589,6 +599,7 @@ BIOS_H_RUNC: equ 0FECBh ; last def. pass 3
 BIOS_H_DIRD: equ 0FF11h ; last def. pass 3
 ReadStatusReg: equ 04271h ; last def. pass 3
 BIOS_LINL32: equ 0F3AFh ; last def. pass 3
+Nakoruru_2.size: equ 03800h ; last def. pass 3
 BIOS_CNVCHR: equ 0ABh ; last def. pass 3
 Seg_P8000_SW: equ 07000h ; last def. pass 3
 BIOS_H_SETS: equ 0FDF4h ; last def. pass 3
@@ -666,6 +677,7 @@ BIOS_FRETOP: equ 0F69Bh ; last def. pass 3
 BIOS_H_FILO: equ 0FE85h ; last def. pass 3
 BIOS_GRPCOL: equ 0F3C9h ; last def. pass 3
 BIOS_DRWANG: equ 0FCBDh ; last def. pass 3
+Nakoruru_1_palette: equ 0561Ch ; last def. pass 3
 BIOS_CONTYP: equ 0F669h ; last def. pass 3
 BIOS_H_INIP: equ 0FDC7h ; last def. pass 3
 BIOS_H_KILL: equ 0FDFEh ; last def. pass 3

@@ -1,4 +1,9 @@
+
+
 frame = 0 <-- get last frame
+
+
+sprites:
 
 C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Earthquakess.webp -o frame_1.webp
 C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 2 Earthquakess.webp -o frame_2.webp
@@ -6,6 +11,24 @@ C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 3 Earth
 C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 4 Earthquakess.webp -o frame_4.webp
 
 C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Haohmaruss.webp -o Haohmaru_frame_1.webp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Charlottess.webp -o Charlotte_frame_1.webp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Galfordss.webp -o Galford_frame_1.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 2 Galfordss.webp -o Galford_frame_2.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 3 Galfordss.webp -o Galford_frame_3.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 4 Galfordss.webp -o Galford_frame_4.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 5 Galfordss.webp -o Galford_frame_5.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 6 Galfordss.webp -o Galford_frame_6.bmp
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 7 Galfordss.webp -o Galford_frame_7.bmp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Nakoruruss.webp -o Nakoruruss_frame_1.bmp
+
+C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Genanss.webp -o Genanss_frame_1.bmp
+
+
+
+bg:
 
 C:\Users\user\Downloads\libwebp-1.2.4-windows-x64\bin\webpmux -get frame 1 Sshaohmarubg.webp -o Sshaohmarubg_frame_1.webp
 

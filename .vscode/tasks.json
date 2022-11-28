@@ -9,8 +9,8 @@
             "command": "C:\\Program Files\\tniasm045\\tniasm.exe",
                 "args": [
                     {
-                      //"value": "Main.s",
-                      "value": "${file}",
+                      "value": "main.s",
+                      //"value": "${file}",
                       "quoting": "strong"
                     }
                 ],
@@ -33,8 +33,9 @@
                         // the "auto save all unsaved files before build" feature of VS Code (it executes this file before save)
                         
                         //"value": "-machine Gradiente_Expert_GPC-1",     // MSX 1
+                        "value": "-machine National_CF-1200",             // MSX 1
                         //"value": "-machine Yamaha_CX11",                // MSX 1 with V9938
-                        "value": "-machine Sony_HB-F1",               // MSX 2 without disk drive
+                        //"value": "-machine Sony_HB-F1",               // MSX 2 without disk drive
                         //"value": "-machine Sony_HB-F1XD",               // MSX 2 with disk drive
                         //"value": "-machine Sony_HB-F1XDJ",                // MSX 2+
                         //"value": "-machine Panasonic_FS-A1WSX",         // MSX 2+ with turbo
@@ -46,10 +47,10 @@
                         "value": "-romtype ASCII16",
                         "quoting": "escape"
                     },
-                    {
-                        "value": "-script C:\\Users\\albs_\\source\\repos\\msx-tests\\msx-tests_debug.tcl",
-                        "quoting": "escape"
-                    },
+                    // {
+                    //     "value": "-script C:\\Users\\albs_\\source\\repos\\msx-tests\\msx-tests_debug.tcl",
+                    //     "quoting": "escape"
+                    // },
                     {
                         "value": "-script C:\\Users\\albs_\\source\\repos\\msx-tests\\add_v9990.tcl",
                         "quoting": "escape"

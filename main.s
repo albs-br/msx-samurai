@@ -24,9 +24,17 @@ Execute:
     call    EnableRomPage2
 
 
+    IFDEF DEBUG
+        ld      hl, SET_MODE_P1
+        call    PrintString
+    ENDIF
     call    V9.Mode_P1
 
 
+    IFDEF DEBUG
+        ld      hl, DISABLE_SCREEN
+        call    PrintString
+    ENDIF
     call    V9.DisableScreen
 
 
@@ -43,10 +51,18 @@ Execute:
 
 
 
+    IFDEF DEBUG
+        ld      hl, CLEAR_VRAM
+        call    PrintString
+    ENDIF
     call    V9.ClearVRAM
 
 
 
+    IFDEF DEBUG
+        ld      hl, SET_PALETTE_CONTROL_REGISTER
+        call    PrintString
+    ENDIF
     ; ------- set palettes
     ld      a, 1    ; palette number for layer A (0-3)
     ld      b, 0    ; palette number for layer B (0-3)
@@ -54,6 +70,10 @@ Execute:
 
 
 
+    IFDEF DEBUG
+        ld      hl, SET_NAMTBL_LAYER_B
+        call    PrintString
+    ENDIF
     ; ------- set names table layer B
     ld		hl, NAM_TBL_seq 				        ; RAM address (source)
     ld		a, V9.P1_NAMTBL_LAYER_B >> 16	        ; VRAM address bits 18-16 (destiny)
@@ -77,6 +97,10 @@ Execute:
     ; ld      b, 0000 0000 b  ; value
     ; call    V9.SetRegister
 
+    IFDEF DEBUG
+        ld      hl, SET_SPR_GEN_BASE_ADDR_REGISTER
+        call    PrintString
+    ENDIF
     ld      a, 0
     call    V9.SetSpriteGeneratorBaseAddrRegister
 
@@ -163,6 +187,10 @@ EARTHQUAKE_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*256)*3))
 
 ; ------------------------------------------------------
 
+    IFDEF DEBUG
+        ld      hl, ENABLE_LAYER_B
+        call    PrintString
+    ENDIF
     ;call    V9.EnableScreen
     call    V9.Enable_Layer_B
 
@@ -538,8 +566,14 @@ NAM_TBL_seq:
 
 ; ------------------------- Strings for debug
 
-PROGRAM_START:
-    db      "Program start", 13, 10, 0
+PROGRAM_START:                  db      "Program start", 13, 10, 0
+SET_MODE_P1:                    db      "Set mode P1", 13, 10, 0
+DISABLE_SCREEN:                 db      "Disable screen", 13, 10, 0
+CLEAR_VRAM:                     db      "Clear VRAM", 13, 10, 0
+SET_PALETTE_CONTROL_REGISTER:   db      "Set palette control reg", 13, 10, 0
+SET_NAMTBL_LAYER_B:             db      "Set NAMTBL layer B", 13, 10, 0
+SET_SPR_GEN_BASE_ADDR_REGISTER: db      "Set SPR gen base addr reg", 13, 10, 0
+ENABLE_LAYER_B:                 db      "Enable layer B", 13, 10, 0
 
 LOADING_BG_HAOHMARU:
     db      "Loading BG Haohmaru", 13, 10, 0

@@ -3,6 +3,8 @@ FNAME "msx-samurai.rom"      ; output file
 PageSize:	    equ	0x4000	        ; 16kB
 Seg_P8000_SW:	equ	0x7000	        ; Segment switch for page 0x8000-BFFFh (ASCII 16k Mapper)
 
+DEBUG:          equ 255             ; defines debug mode, value is irrelevant (comment it out for production version)
+
 ; Compilation address
     org 0x4000, 0x7fff	                    ; 0x8000 can be also used here if Rom size is 16kB or less.
 
@@ -13,6 +15,12 @@ Seg_P8000_SW:	equ	0x7000	        ; Segment switch for page 0x8000-BFFFh (ASCII 1
     INCLUDE "Include/V9990.s"
 
 Execute:
+    IFDEF DEBUG
+        ld      hl, PROGRAM_START
+        call    PrintString
+    ENDIF
+
+
     call    EnableRomPage2
 
 
@@ -71,6 +79,14 @@ Execute:
 
     ld      a, 0
     call    V9.SetSpriteGeneratorBaseAddrRegister
+
+
+
+    IFDEF DEBUG
+        ld      hl, LOADING_SPR_EARTHQUAKE
+        call    PrintString
+    ENDIF
+
 
 
     ; ------- load sprite patterns
@@ -206,6 +222,13 @@ MainLoop:
 ; -------------------------------------------------------------
 
 Load_BG_Earthquake:
+    IFDEF DEBUG
+        ld      hl, LOADING_BG_EARTHQUAKE
+        call    PrintString
+    ENDIF
+
+
+
     ; ------- set palette for layer B
 	; switch MegaROM page
     ld	    a, EARTHQUAKE_BG_MEGAROM_PAGE
@@ -238,6 +261,13 @@ Load_BG_Earthquake:
     ret
 
 Load_BG_Haohmaru:
+    IFDEF DEBUG
+        ld      hl, LOADING_BG_HAOHMARU
+        call    PrintString
+    ENDIF
+
+
+
     ; ------- set palette for layer B
 	; switch MegaROM page
     ld	    a, HAOHMARU_BG_MEGAROM_PAGE
@@ -272,6 +302,12 @@ Load_BG_Haohmaru:
 ; -------------------------------------------------------------
 
 Load_Haohmaru_Sprites:
+
+    IFDEF DEBUG
+        ld      hl, LOADING_SPR_HAOHMARU
+        call    PrintString
+    ENDIF
+
 
 ; 128 bytes per line x 128 lines
 HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
@@ -348,6 +384,11 @@ HAOHMARU_SPRATR_ADDR:   equ V9.P1_SPRATR + SPRATR_Earthquake_1.size
 
 Load_Nakoruru_Sprites:
 
+    IFDEF DEBUG
+        ld      hl, LOADING_SPR_NAKORURU
+        call    PrintString
+    ENDIF
+
 ; 128 bytes per line x 128 lines
 ;HAOHMARU_1_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*128)*1))
 
@@ -422,6 +463,15 @@ Load_Nakoruru_Sprites:
     ret
 
 
+PrintString:
+    ld      a, (hl)
+    or      a
+    ret     z
+    call    BIOS_CHPUT
+    inc     hl
+    jp      PrintString
+
+
 ; To write a value in VRAM, set the target address to VRAM Write Base Address registers (R#0-R#2) 
 ; and have the data output at VRAM DATA port (P#0). As the bit 7 (MSB) of R#2 functions as
 ; AII (Address Increment Inhibit), if it is "1", automatic address increment by writing the data is inhibited.
@@ -485,6 +535,28 @@ NAM_TBL_seq:
     INCLUDE "Graphics/Characters/Haohmaru/Haohmaru_palette.s"
     INCLUDE "Graphics/Characters/Nakoruru/Nakoruru_palette.s"
 
+
+; ------------------------- Strings for debug
+
+PROGRAM_START:
+    db      "Program start", 13, 10, 0
+
+LOADING_BG_HAOHMARU:
+    db      "Loading BG Haohmaru", 13, 10, 0
+
+LOADING_BG_EARTHQUAKE:
+    db      "Loading BG Earthquake", 13, 10, 0
+
+LOADING_SPR_HAOHMARU:
+    db      "Loading SPR Haohmaru", 13, 10, 0
+
+LOADING_SPR_NAKORURU:
+    db      "Loading SPR Nakoruru", 13, 10, 0
+
+LOADING_SPR_EARTHQUAKE:
+    db      "Loading SPR Earthquake", 13, 10, 0
+
+; -------------------
     db      "End ROM started at 0x4000"
 
 	ds PageSize - ($ - 0x4000), 255	; Fill the unused area with 0xFF

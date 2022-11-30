@@ -188,11 +188,12 @@ EARTHQUAKE_4_VRAM_ADDR: equ (V9.P1_PATTBL_LAYER_A + ((128*256)*3))
 ; ------------------------------------------------------
 
     IFDEF DEBUG
-        ld      hl, ENABLE_LAYER_B
+        ;ld      hl, ENABLE_LAYER_B
+        ld      hl, ENABLE_SCREEN
         call    PrintString
     ENDIF
-    ;call    V9.EnableScreen
-    call    V9.Enable_Layer_B
+    call    V9.EnableScreen
+    ;call    V9.Enable_Layer_B
 
 
     ; --------
@@ -569,6 +570,7 @@ NAM_TBL_seq:
 PROGRAM_START:                  db      "Program start", 13, 10, 0
 SET_MODE_P1:                    db      "Set mode P1", 13, 10, 0
 DISABLE_SCREEN:                 db      "Disable screen", 13, 10, 0
+ENABLE_SCREEN:                  db      "Enable screen", 13, 10, 0
 CLEAR_VRAM:                     db      "Clear VRAM", 13, 10, 0
 SET_PALETTE_CONTROL_REGISTER:   db      "Set palette control reg", 13, 10, 0
 SET_NAMTBL_LAYER_B:             db      "Set NAMTBL layer B", 13, 10, 0
